@@ -1,0 +1,22 @@
+# Ignore datasets
+data/
+
+# Ignore CSV files
+*.csv
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Model files
+*.pkl
+*.joblib
+*.model
+
+# Environment folders
+.env
+.venv
+venv/

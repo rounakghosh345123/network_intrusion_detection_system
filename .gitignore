@@ -13,7 +13,12 @@ __pycache__/
 
 # Large model files
 *.pkl
+
 *.joblib
+!models/xgboost_attack_model_13class_balanced.joblib
+!models/xgboost_attack_model_13class_features.joblib
+!models/xgboost_attack_model_13class_mapping.joblib
+
 *.model
 
 # Environment folders

@@ -113,7 +113,11 @@ Upload a compatible network traffic CSV to get per-flow classification, confiden
 
 ## Screenshots
 
-![Live Demo](screenshots/nids.png)
+![Live Demo 1](screenshots/pic1.png)
+![Live Demo 2](screenshots/pic2.png)
+![Live Demo 3](screenshots/pic3.png)
+![Live Demo 4](screenshots/pic4.png)
+![Live Demo 5](screenshots/pic5.png)
 
 ## Tech Stack
 

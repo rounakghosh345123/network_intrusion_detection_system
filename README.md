@@ -204,7 +204,7 @@ streamlit run app/app.py
 ## Live Demo
 
 - **V1 (Streamlit):** 🔗 [Try the app here](https://networkintrusiondetectionsystem-9appfcgmp5armj9plgh4pzt.streamlit.app/)
-- **V2 (Flask on Render):** coming soon
+- **V2 (Flask on Render):** 🔗 [Try the app here](https://intrushield-eumg.onrender.com/)
 
 Upload a compatible network-flow CSV to get per-flow classification, confidence scores, attack distribution and downloadable results. The apps check that all 77 required features are present before predicting, and work on partial uploads (for example BENIGN-only, or a single attack type).
 

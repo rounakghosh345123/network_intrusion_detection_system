@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intrushield - Network Security</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Inline SVG icon sprite: icons are used with <use href="#i-name"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></symbol>
+      <symbol id="i-brain" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></symbol>
+      <symbol id="i-report" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/></symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></symbol>
+      <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <svg class="icon brand-icon"><use href="#i-shield"/></svg>
+        <div><div class="brand-name">INTRUSHIELD</div><div class="brand-sub">Network Security</div></div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <div class="nav-group">Main</div>
+        <button class="nav-item active" data-page="overview"><svg class="icon"><use href="#i-grid"/></svg><span>Overview</span></button>
+        <button class="nav-item" data-page="analyze"><svg class="icon"><use href="#i-upload"/></svg><span>Analyze Traffic</span></button>
+        <div class="nav-group">Security</div>
+        <button class="nav-item" data-page="intelligence"><svg class="icon"><use href="#i-brain"/></svg><span>Intelligence</span></button>
+        <button class="nav-item" data-page="reports"><svg class="icon"><use href="#i-report"/></svg><span>Reports</span></button>
+      </nav>
+
+      <div class="side-status">
+        <div class="nav-group">Model status</div>
+        <div class="status-line"><span class="dot" id="sideStatusDot"></span><span id="sideStatusText">Checking</span></div>
+        <div class="muted">XGBoost</div>
+        <div class="muted" id="sideModelMeta">-- classes · -- features</div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <!-- ===== TOPBAR ===== -->
+      <header class="topbar">
+        <div class="breadcrumb"><span>Security</span><svg class="icon sm"><use href="#i-chevron"/></svg><strong id="pageTitle">Overview</strong></div>
+        <div class="status-pill"><span class="dot" id="topStatusDot"></span><span id="topStatusText">Checking</span><span class="muted">XGBoost</span></div>
+      </header>
+
+      <main class="content">
+        <!-- ===== OVERVIEW ===== -->
+        <section class="page active" id="page-overview">
+          <div class="page-head">
+            <h1>Security Overview</h1>
+            <p>Analyze recorded network flows using the Intrushield XGBoost detection engine.</p>
+          </div>
+
+          <div class="empty-banner" id="overviewEmpty">
+            <svg class="icon"><use href="#i-activity"/></svg>
+            <div><strong>No analysis data yet</strong><span>Upload a network traffic CSV to begin classification.</span></div>
+            <button class="btn small" data-goto="analyze">Analyze Traffic</button>
+          </div>
+
+          <div class="kpi-grid">
+            <article class="kpi-card">
+              <div class="kpi-top"><span>Total Flows</span><svg class="icon"><use href="#i-activity"/></svg></div>
+              <div class="kpi-value" id="totalFlows">0</div>
+              <div class="kpi-sub" id="totalSub">No analysis yet</div>
+            </article>
+            <article class="kpi-card safe">
+              <div class="kpi-top"><span>Benign Traffic</span><svg class="icon"><use href="#i-check"/></svg></div>
+              <div class="kpi-value" id="benignCount">0</div>
+              <div class="kpi-sub" id="benignSub">--</div>
+            </article>
+            <article class="kpi-card danger">
+              <div class="kpi-top"><span>Detected Attacks</span><svg class="icon"><use href="#i-alert"/></svg></div>
+              <div class="kpi-value" id="attackCount">0</div>
+              <div class="kpi-sub" id="attackSub">--</div>
+            </article>
+            <article class="kpi-card info">
+              <div class="kpi-top"><span>Average Confidence</span><svg class="icon"><use href="#i-brain"/></svg></div>
+              <div class="kpi-value" id="avgConfidence">--</div>
+              <div class="kpi-sub">Model confidence</div>
+            </article>
+          </div>
+
+          <div class="grid-2">
+            <section class="panel traffic-panel">
+              <h2>Traffic Overview</h2>
+              <div class="bar-chart">
+                <div class="bar-col"><span class="bar-value" id="benignVal">0</span>
+                  <div class="bar-track"><div class="bar-fill safe" id="benignBar"></div></div>
+                  <span class="bar-label"><i class="swatch safe"></i>BENIGN <b id="benignPct">0%</b></span></div>
+                <div class="bar-col"><span class="bar-value" id="attackVal">0</span>
+                  <div class="bar-track"><div class="bar-fill danger" id="attackBar"></div></div>
+                  <span class="bar-label"><i class="swatch danger"></i>ATTACKS <b id="attackPct">0%</b></span></div>
+              </div>
+            </section>
+
+            <section class="panel threat-panel">
+              <h2>Threat Distribution</h2>
+              <div class="threat-list" id="threatList">
+                <div class="empty-state"><svg class="icon"><use href="#i-shield"/></svg><strong>No threats detected yet</strong><span>Results appear after an analysis.</span></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="grid-2 wide-left">
+            <section class="panel prediction-panel">
+              <h2>Recent Predictions</h2>
+              <div class="table-wrap">
+                <table class="prediction-table">
+                  <thead><tr><th>Time</th><th>Prediction</th><th>Confidence</th><th>Status</th></tr></thead>
+                  <tbody id="recentBody"><tr><td colspan="4" class="empty-cell">No predictions available.</td></tr></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel engine-panel">
+              <h2>Detection Engine</h2>
+              <dl class="spec-list">
+                <dt>Engine</dt><dd>XGBoost</dd>
+                <dt>Classification</dt><dd>Multiclass</dd>
+                <dt>Classes</dt><dd class="num" id="engClasses">13</dd>
+                <dt>Input Features</dt><dd class="num" id="engFeatures">77</dd>
+                <dt>Training Data</dt><dd>CICIDS2017 + CICIDS2018</dd>
+                <dt>Backend</dt><dd>Flask</dd>
+                <dt>Status</dt><dd id="engStatus">--</dd>
+              </dl>
+            </section>
+          </div>
+        </section>
+
+        <!-- ===== ANALYZE TRAFFIC ===== -->
+        <section class="page" id="page-analyze">
+          <div class="page-head">
+            <h1>Analyze Network Traffic</h1>
+            <p>Upload a CSV containing the 77 model features.</p>
+          </div>
+
+          <div class="upload-zone" id="dropZone" tabindex="0" role="button" aria-label="Choose a CSV file">
+            <svg class="icon upload-icon"><use href="#i-upload"/></svg>
+            <strong>Drop your CSV here</strong>
+            <span>or <u>Browse files</u></span>
+            <small>Expected input: 77 model features</small>
+            <input type="file" id="fileInput" accept=".csv" hidden>
+          </div>
+
+          <div class="file-card" id="fileCard" hidden>
+            <div class="file-head">
+              <svg class="icon file-icon"><use href="#i-file"/></svg>
+              <div><div class="file-name" id="fileName">--</div><div class="muted num" id="fileMeta">--</div></div>
+            </div>
+            <div class="file-compat" id="fileCompat">Checking...</div>
+            <div class="file-actions">
+              <button class="btn ghost" id="removeBtn">Remove</button>
+              <button class="btn primary" id="analyzeBtn"><span class="spinner" id="spinner" hidden></span><span id="analyzeLabel">Analyze Traffic</span></button>
+            </div>
+          </div>
+
+          <div class="notice error" id="errorBox" hidden role="alert"></div>
+          <div class="notice success" id="successBox" hidden></div>
+        </section>
+
+        <!-- ===== INTELLIGENCE ===== -->
+        <section class="page" id="page-intelligence">
+          <div class="page-head">
+            <h1>Threat Intelligence</h1>
+            <p>Detection coverage and model capabilities.</p>
+          </div>
+          <div class="grid-2 wide-right">
+            <section class="panel">
+              <h2>Detection Engine</h2>
+              <dl class="spec-list">
+                <dt>Engine</dt><dd>XGBoost</dd>
+                <dt>Classification</dt><dd>Multiclass</dd>
+                <dt>Classes</dt><dd class="num">13</dd>
+                <dt>Input Features</dt><dd class="num">77</dd>
+                <dt>Training Data</dt><dd>CICIDS2017 + CICIDS2018</dd>
+                <dt>Input</dt><dd>Uploaded CSV flows</dd>
+              </dl>
+            </section>
+            <section class="panel">
+              <h2>Detection Coverage</h2>
+              <div class="coverage-grid" id="coverageGrid"><span class="muted">Loading...</span></div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ===== REPORTS ===== -->
+        <section class="page" id="page-reports">
+          <div class="page-head">
+            <h1>Reports &amp; Export</h1>
+            <p>Export results from the latest traffic analysis.</p>
+          </div>
+          <div class="grid-2">
+            <section class="panel report-card">
+              <svg class="icon report-icon"><use href="#i-file"/></svg>
+              <h2>Prediction Results</h2>
+              <p class="muted">Export the analyzed prediction records (first 100 rows returned by the server).</p>
+              <button class="btn primary" id="exportCsvBtn" disabled><svg class="icon sm"><use href="#i-download"/></svg>Download CSV</button>
+            </section>
+            <section class="panel report-card">
+              <svg class="icon report-icon"><use href="#i-activity"/></svg>
+              <h2>Analysis Summary</h2>
+              <p class="muted">Export summary statistics and attack distribution.</p>
+              <button class="btn primary" id="exportSummaryBtn" disabled><svg class="icon sm"><use href="#i-download"/></svg>Download Summary</button>
+            </section>
+          </div>
+          <p class="muted" id="reportHint">Run an analysis to enable exports.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
